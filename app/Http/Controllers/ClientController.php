@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Http\Resources\ClientResource;
+use App\Mail\ClientWelcomed;
 
 class ClientController extends Controller
 {
@@ -14,7 +15,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return ClientResource::collection(Client::all())->filter()->all();
+        return ClientResource::collection(Client::all());
     }
 
     /**
@@ -31,6 +32,11 @@ class ClientController extends Controller
     public function store(StoreClientRequest $request)
     {
         $client = Client::create($request->all());
+
+        // use events to dispatch sending of email instead
+        $url = route('clients.update', ['client' => $client->id]);
+        Mail::to($request->email)->send(new ClientWelcomed($request->first_name, $url));
+
         return new ClientResource($client);
     }
 
