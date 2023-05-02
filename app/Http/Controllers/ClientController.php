@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Events\ClientCreated;
+use App\Jobs\NotifyClient;
 use App\Models\Client;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Http\Resources\ClientResource;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -35,6 +37,12 @@ class ClientController extends Controller
         $client = Client::create($request->all());
 
         ClientCreated::dispatch($client);
+
+        $schedule = new Schedule();
+//        $schedule->job(new NotifyClient($client))->cron('0 0 */3 * *');
+        $schedule->job(new NotifyClient)->cron('* * * * *');
+//        $schedule->job(new NotifyClient($client))->cron('0 0 */3 * *');
+//        NotifyClient::dispatch($client);
 
         return new ClientResource($client);
     }
