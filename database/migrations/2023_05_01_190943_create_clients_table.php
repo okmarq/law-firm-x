@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email');
             $table->dateTime('date_profiled');
+            $table->dateTime('last_notification')->nullable();
             $table->string('primary_legal_counsel');
             $table->date('date_of_birth');
             $table->string('profile_image')->nullable();
-            $table->timestamps();
         });
     }
 

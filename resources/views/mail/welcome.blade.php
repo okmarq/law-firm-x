@@ -1,15 +1,18 @@
 <x-mail::message>
-# {{ $app_name }}
+    # {{ config('app.name') }}
 
-Hello {{ $first_name }}!
+    Hello {{ $first_name }}!
 
-Your profile has been created successfully.
+    Your profile has been created successfully.
 
-Update using the button below
-<x-mail::button :url="$url" color="success">
-Update
-</x-mail::button>
+    We urge you to update your profile with your passport photograph.
 
-Thanks,<br>
-{{ config('app.name') }}
+    Update using the button below
+
+    <x-mail::button :url="$url" color="success">
+        Update
+    </x-mail::button>
+
+    Thanks,
+    {{ config('app.name') }}
 </x-mail::message>

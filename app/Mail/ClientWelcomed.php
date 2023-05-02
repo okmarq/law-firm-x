@@ -42,8 +42,7 @@ class ClientWelcomed extends Mailable implements ShouldQueue
             markdown: 'mail.welcome',
             with: [
                 'first_name' => $this->first_name,
-                'app_name' => env('APP_NAME'),
-                'url' => ''
+                'url' => $this->url,
             ],
         );
     }

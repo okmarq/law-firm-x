@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ClientCreated;
 use App\Models\Client;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
@@ -33,9 +34,7 @@ class ClientController extends Controller
     {
         $client = Client::create($request->all());
 
-        // use events to dispatch sending of email instead
-        $url = route('clients.update', ['client' => $client->id]);
-        Mail::to($request->email)->send(new ClientWelcomed($request->first_name, $url));
+        ClientCreated::dispatch($client);
 
         return new ClientResource($client);
     }
