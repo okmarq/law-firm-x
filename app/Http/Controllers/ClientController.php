@@ -7,7 +7,7 @@ use App\Models\Client;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Http\Resources\ClientResource;
-use App\Mail\ClientWelcomed;
+use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
@@ -45,6 +45,20 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         return new ClientResource($client);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function showByLastName(Request $request)
+    {
+        $last_name = $request->last_name;
+        $clients = Client::query();
+        if ($last_name) {
+            $clients->where('last_name', 'LIKE', '%' . $last_name . '%');
+        }
+        $clients = $clients->get();
+        return ClientResource::collection($clients);
     }
 
     /**
