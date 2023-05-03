@@ -25,9 +25,9 @@ class StoreClientRequest extends FormRequest
             'first_name' => 'required|string|max:64',
             'last_name' => 'required|string|max:64',
             'email' => 'required|string|max:32|unique:clients,email',
-            'date_profiled' => 'required|date_format:Y-m-d H:i:s|after_or_equal:' . date(DATE_ATOM),
-            'last_notification'  => 'nullable|date_format:Y-m-d H:i:s|after_or_equal:' . date(DATE_ATOM),
+            'date_profiled' => 'required|date_format:Y-m-d',
             'primary_legal_counsel' => 'required|string|max:64',
+            'case_detail' => 'required|string|max:255',
             'date_of_birth' => 'required|date_format:Y-m-d',
             'profile_image' => 'nullable|image|max:2048',
         ];

@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email');
-            $table->dateTime('date_profiled');
-            $table->dateTime('last_notification')->nullable();
+            $table->date('date_profiled');
+            $table->date('last_notification')->nullable();
             $table->string('primary_legal_counsel');
+            $table->string('case_detail');
             $table->date('date_of_birth');
             $table->string('profile_image')->nullable();
         });

@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Events\ClientCreated;
-use App\Jobs\NotifyClient;
 use App\Models\Client;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Http\Resources\ClientResource;
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ClientController extends Controller
 {
@@ -38,12 +37,6 @@ class ClientController extends Controller
 
         ClientCreated::dispatch($client);
 
-        $schedule = new Schedule();
-//        $schedule->job(new NotifyClient($client))->cron('0 0 */3 * *');
-        $schedule->job(new NotifyClient)->cron('* * * * *');
-//        $schedule->job(new NotifyClient($client))->cron('0 0 */3 * *');
-//        NotifyClient::dispatch($client);
-
         return new ClientResource($client);
     }
 
@@ -67,6 +60,11 @@ class ClientController extends Controller
         }
         $clients = $clients->get();
         return ClientResource::collection($clients);
+    }
+
+    public function showByTIme()
+    {
+        return ClientResource::collection(Client::where('profile_image', null)->orWhereDate('last_notification', '<', Carbon::now()->subDays(3))->get());
     }
 
     /**

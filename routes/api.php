@@ -20,4 +20,5 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::apiResource('clients', ClientController::class);
+Route::get('time', [ClientController::class, 'showByTime'])->name('clients.time');
 Route::get('clients/filter/{last_name}', [ClientController::class, 'showByLastName'])->name('clients.last_name');

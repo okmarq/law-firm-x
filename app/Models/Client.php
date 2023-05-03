@@ -22,7 +22,8 @@ class Client extends Model
         'primary_legal_counsel',
         'date_of_birth',
         'profile_image',
-        'last_notification'
+        'last_notification',
+        'case_detail'
     ];
 
     public function trap($event, $data = []) {
